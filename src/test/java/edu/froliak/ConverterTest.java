@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /*
   @author eugen
   @project LabWork_3_4
@@ -22,132 +24,72 @@ import org.junit.jupiter.api.Test;
     }
 
     @Test
-    void whenArabic_3_ThenRoman_III() {
-        Assertions.assertEquals("III", Converter.convertToRoman(3));
+    void whenRoman_null_ThenTrowNullPointerException() {
+        Exception exception = Assertions.assertThrows(NullPointerException.class, ()-> Converter.romanToArabic(null));
+        Assertions.assertSame(NullPointerException.class, exception.getClass());
+        assertEquals("Input string of roman number can not be null", exception.getMessage());
     }
 
     @Test
-    void whenArabic_4_ThenRoman_IV() {
-        Assertions.assertEquals("IV", Converter.convertToRoman(4));
+    void whenRoman_emptyInputString_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic(""));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Input string of roman number can not be empty", exception.getMessage());
     }
 
     @Test
-    void whenArabic_5_ThenRoman_V() {
-        Assertions.assertEquals("V", Converter.convertToRoman(5));
+    void whenRomanHas_invalidCharacters_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic("WX"));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Invalid characters were entered", exception.getMessage());
     }
 
     @Test
-    void whenArabic_8_ThenRoman_VIII() {
-        Assertions.assertEquals("VIII", Converter.convertToRoman(8));
+    void whenRomanHas_lowercaseCharacters_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic("ivx"));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Roman string of numbers must be only in uppercase", exception.getMessage());
     }
 
     @Test
-    void whenArabic_9_ThenRoman_IX() {
-        Assertions.assertEquals("IX", Converter.convertToRoman(9));
+    void whenRomanHas_spaces_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic("X I"));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Invalid character: space", exception.getMessage());
     }
 
     @Test
-    void whenArabic_10_ThenRoman_X() {
-        Assertions.assertEquals("X", Converter.convertToRoman(10));
+    void whenRomanHas_nonExistentFormat_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic("VVVV"));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Invalid Roman numbers patterns", exception.getMessage());
     }
 
     @Test
-    void whenArabic_11_ThenRoman_XI() {
-        Assertions.assertEquals("XI", Converter.convertToRoman(11));
+    void whenRomanHas_cyrillicCharacters_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic("ХІ"));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Roman input string should not contain cyrillic characters", exception.getMessage());
     }
 
     @Test
-    void whenArabic_15_ThenRoman_XV() {
-        Assertions.assertEquals("XV", Converter.convertToRoman(15));
+    void whenRomanHas_negativeNumbers_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic("-VI"));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Negative numbers are not allowed", exception.getMessage());
     }
 
     @Test
-    void whenArabic_18_ThenRoman_XVIII() {
-        Assertions.assertEquals("XVIII", Converter.convertToRoman(18));
+    void whenRomanHas_pipe_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic("V|"));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Invalid character: pipe character", exception.getMessage());
     }
 
     @Test
-    void whenArabic_20_ThenRoman_XX() {
-        Assertions.assertEquals("XX", Converter.convertToRoman(20));
-    }
-
-    @Test
-    void whenArabic_28_ThenRoman_XXVIII() {
-        Assertions.assertEquals("XXVIII", Converter.convertToRoman(28));
-    }
-
-    @Test
-    void whenArabic_30_ThenRoman_XXX() {
-        Assertions.assertEquals("XXX", Converter.convertToRoman(30));
-    }
-
-    @Test
-    void whenArabic_38_ThenRoman_XXXVIII() {
-        Assertions.assertEquals("XXXVIII", Converter.convertToRoman(38));
-    }
-
-    @Test
-    void whenArabic_48_ThenRoman_XLVIII() {
-        Assertions.assertEquals("XLVIII", Converter.convertToRoman(48));
-    }
-
-    @Test
-    void whenArabic_50_ThenRoman_L() {
-        Assertions.assertEquals("L", Converter.convertToRoman(50));
-    }
-
-    @Test
-    void whenArabic_58_ThenRoman_LVIII() {
-        Assertions.assertEquals("LVIII", Converter.convertToRoman(58));
-    }
-
-    @Test
-    void whenArabic_88_ThenRoman_LXXXVIII() {
-        Assertions.assertEquals("LXXXVIII", Converter.convertToRoman(88));
-    }
-
-    @Test
-    void whenArabic_98_ThenRoman_XCVIII() {
-        Assertions.assertEquals("XCVIII", Converter.convertToRoman(98));
-    }
-
-    @Test
-    void whenArabic_108_ThenRoman_CVIII() {
-        Assertions.assertEquals("CVIII", Converter.convertToRoman(108));
-    }
-
-    @Test
-    void whenArabic_198_ThenRoman_CXCVIII() {
-        Assertions.assertEquals("CXCVIII", Converter.convertToRoman(198));
-    }
-
-    @Test
-    void whenArabic_200_ThenRoman_CC() {
-        Assertions.assertEquals("CC", Converter.convertToRoman(200));
-    }
-
-    @Test
-    void whenArabic_420_ThenRoman_CDXX() {
-        Assertions.assertEquals("CDXX", Converter.convertToRoman(420));
-    }
-
-    @Test
-    void whenArabic_500_ThenRoman_D() {
-        Assertions.assertEquals("D", Converter.convertToRoman(500));
-    }
-
-    @Test
-    void whenArabic_595_ThenRoman_DXCV() {
-        Assertions.assertEquals("DXCV", Converter.convertToRoman(595));
-    }
-
-    @Test
-    void whenArabic_1000_ThenRoman_M() {
-        Assertions.assertEquals("M", Converter.convertToRoman(1000));
-    }
-
-    @Test
-    void whenArabic_1598_ThenRoman_MDXCIII() {
-        Assertions.assertEquals("MDXCVIII", Converter.convertToRoman(1598));
+    void whenRomanHas_underscore_ThenTrowIllegalArgumentException() {
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> Converter.romanToArabic("V_II"));
+        Assertions.assertSame(IllegalArgumentException.class, exception.getClass());
+        assertEquals("Invalid character: underscore character", exception.getMessage());
     }
 }
